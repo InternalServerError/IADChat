@@ -17,7 +17,11 @@ class Dispatcher
 		$this->request = new Request();
 		$router = new Router();
 		$router->parseRequest($this->request->getUrl(), $this->request);
-		$controller = $this->loadController();
+		try {
+		  $controller = $this->loadController();
+		} catch (\Throwable $t) { 
+            Router::renderErrorPage();
+        }
 		$handler = [$controller, strtolower($this->request->getMethod()).ucfirst($this->request->action)];
 		if (!is_callable($handler)) {
 			Router::renderErrorPage();
