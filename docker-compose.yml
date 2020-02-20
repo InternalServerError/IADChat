@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+
+  web:
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./app:/var/www/html
+      - ./nginx/iad.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    working_dir: /var/www/html
+
+  php:
+    build: .
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - maria
+    links:
+      - maria
+
+  maria:
+      image: mariadb:latest
+      environment:
+          MYSQL_ROOT_PASSWORD: iad_admin
+          MYSQL_DATABASE: iad
+          MYSQL_USER: iad
+          MYSQL_PASSWORD: iad_test
+      logging:
+          driver: syslog
+      restart: always
