@@ -106,7 +106,7 @@
 					container.empty();
 					container.html(users);
 				})
-			}, 5000);
+			}, 3000);
 		});
 		$("#button-addon2").on('click', function(event) {
 			event.stopImmediatePropagation();
