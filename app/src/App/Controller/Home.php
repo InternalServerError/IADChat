@@ -12,7 +12,7 @@ class Home extends Controller {
 	/**
 	 * Render home view
 	 */
-    public function getIndex()
+    public function getIndex(): void
     {
     	$connectedUsers = (new UserModel())->getConnectedUsers();
     	$messages = (new MessageModel())->getBroadcastMessages();
@@ -21,4 +21,3 @@ class Home extends Controller {
     	$view->assign('messages', $messages);
     }
 }
-

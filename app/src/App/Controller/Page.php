@@ -10,9 +10,8 @@ class Page extends Controller
 	/**
 	 * Display generic error page
 	 */
-	public function getError()
+	public function getError(): void
 	{
 		$view = new View('error');
 	}
 }
-

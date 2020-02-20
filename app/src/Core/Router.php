@@ -68,7 +68,7 @@ class Router {
 	/**
 	 * Redirect to error page
 	 */
-    public static function renderErrorPage()
+    public static function renderErrorPage(): void
     {
 		ob_start();
 		header('Location: /page/error');
@@ -80,11 +80,10 @@ class Router {
 	 *
 	 * @param string $url
 	 */
-	public static function redirectTo(string $url = '/')
+	public static function redirectTo(string $url = '/'): void
 	{
 		ob_start();
 		header('Location: ' . $url);
 		ob_end_flush();
 	}
 }
-

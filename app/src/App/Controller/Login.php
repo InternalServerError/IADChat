@@ -14,7 +14,7 @@ class Login extends Controller
 	/**
 	 * Render login form view
 	 */
-	public function getIndex()
+	public function getIndex(): void
 	{
     	$view = new View('login');
     	$view->assign('error', $_SESSION['loginError']);
@@ -48,9 +48,9 @@ class Login extends Controller
 	}
 
 	/**
-	 * Logout user
+	 * Logout user and redirect to login page
 	 */
-	public function getLogout()
+	public function getLogout(): void
 	{
 		(new UserModel())->clearSessions($this->user);
 		unset($_SESSION['loggedIn']);
@@ -60,4 +60,3 @@ class Login extends Controller
 		Router::redirectTo('/login');
 	}
 }
-

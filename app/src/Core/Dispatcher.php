@@ -12,7 +12,7 @@ class Dispatcher
     /**
      * Dispatch request to router
      */
-    public function dispatch()
+    public function dispatch(): void
     {
 		$this->request = new Request();
 		$router = new Router();
