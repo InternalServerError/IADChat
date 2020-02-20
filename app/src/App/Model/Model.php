@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Foo\App\Model;
 
 use \PDO as PDO;
-use App\Utils\Helper as Helper;
 use Ramsey\Uuid\Uuid;
 
 abstract class Model

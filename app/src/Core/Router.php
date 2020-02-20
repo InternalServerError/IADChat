@@ -21,7 +21,7 @@ class Router {
     			$this->fillRequestParameters($request, $url);
 			} else {
 				$this->fillRequestParameters($request);
-				$this->redirect();
+				static::redirectTo();
 			}
     	} else {
     		if ($isAuthorized) {
@@ -31,7 +31,7 @@ class Router {
 					$this->fillRequestParameters($request, $url);
     			} else {
 					$this->fillRequestParameters($request, '/login');
-					$this->redirect('/login');
+					static::redirectTo('/login');
 				}
     		}
 		}
@@ -65,16 +65,26 @@ class Router {
     	}
     }
 
-    /**
-     * Redirect to url
-     *
-     * @param string $redirectUrl
-     */
-    private function redirect(string $redirectUrl = '/'): void
+	/**
+	 * Redirect to error page
+	 */
+    public static function renderErrorPage()
     {
 		ob_start();
-		header('Location: '. $redirectUrl);
+		header('Location: /page/error');
 		ob_end_flush();
     }
+
+	/**
+	 * Redirect to given URL
+	 *
+	 * @param string $url
+	 */
+	public static function redirectTo(string $url = '/')
+	{
+		ob_start();
+		header('Location: ' . $url);
+		ob_end_flush();
+	}
 }
 

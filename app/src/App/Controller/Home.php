@@ -21,3 +21,4 @@ class Home extends Controller {
     	$view->assign('messages', $messages);
     }
 }
+

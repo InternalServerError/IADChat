@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Foo\Core;
 
 use Foo\App\Controller\Controller as Controller;
-use Foo\Utils\Helper as Helper;
 
 class Dispatcher 
 {
@@ -21,7 +20,7 @@ class Dispatcher
 		$controller = $this->loadController();
 		$handler = [$controller, strtolower($this->request->getMethod()).ucfirst($this->request->action)];
 		if (!is_callable($handler)) {
-			Helper::redirectToErrorPage();
+			Router::renderErrorPage();
 		}
 		call_user_func_array($handler, [$this->request]);
     }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Foo\App\Model;
 
 use Foo\App\Entity\MessageEntity as MessageEntity;
-use Foo\Utils\Helper as Helper;
+use Foo\App\Entity\UserEntity as UserEntity;
+use Foo\Core\Router as Router;
 
 class MessageModel extends Model
 {
@@ -26,7 +27,7 @@ class MessageModel extends Model
 			$stmt->execute();
 			$rawMessages = $stmt->fetchAll();
 		} catch (\Throwable $t) {
-			Helper::redirectToErrorPage();
+			Router::renderErrorPage();
 		}
 
 		$messages = array_map(function($rawMessage) use ($toArray) {
@@ -39,5 +40,36 @@ class MessageModel extends Model
 		}, $rawMessages);
 
 		return $messages;
+	}
+
+	/**
+	 * Create new message
+	 * 
+	 * @param UserEntity $user
+	 * @param array $data
+	 *
+	 * @return MessageEntity
+	 */
+	public function createMessage(UserEntity $user, array $data): MessageEntity
+	{
+		$messageId = $this->generateUuid();
+
+		try {
+			$sqlQuery = "INSERT INTO messages VALUES(:id, :text, :author, CURRENT_TIMESTAMP(), NULL, 1)";
+			$stmt = $this->pdo->prepare($sqlQuery);
+			$stmt->execute([
+				':id' => $messageId,
+				':text' => $data['text'],
+				':author' => $user->getId()
+			]);
+		} catch (\Throwable $t) {
+			Router::renderErrorPage();
+		}
+
+		$message = (new MessageEntity())->setId($messageId)
+					->setAuthor($user->getNickname())
+					->setText($data['text']);
+
+		return $message;
 	}
 }

@@ -15,3 +15,4 @@ class Page extends Controller
 		$view = new View('error');
 	}
 }
+
