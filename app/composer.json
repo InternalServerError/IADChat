@@ -1,0 +1,11 @@
+{
+    "name":"IAD applicant test",
+    "description":"IAD Dependencies",
+    "require":{
+    	"vlucas/phpdotenv": "dev-master",
+    	"ramsey/uuid": "dev-master"
+    },
+    "autoload":{
+		"psr-0": {"Foo": "src/"}
+    }
+}
